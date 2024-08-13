@@ -1,5 +1,4 @@
-Modern Tibetan POS-tagger using Google's Gemini Pro API
-The script is designed to produce Universal Dependency (UD) part-of-speech (POS) tagged files in conLLu-format.
+This repo provides a Modern Tibetan POS-tagger using Google's Gemini Pro API. The scripts are designed to produce Universal Dependency (UD) part-of-speech (POS) tagged files in conLLu-format.
 ## Description
 The script takes all files from a folder, tokenises the contained text with modern-botok and sends it line by line to Google Gemini using the Google Cloud API. Gemini returns the tokens with POS-tags and writes it in conLLu-format. In a post-processing step, the generated conLLu-files are cleaned up and tags are normalised.
 ### POS-tag set
