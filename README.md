@@ -9,4 +9,4 @@ Detailed instructions on how to set up Google Cloud and Vertex AI and how to run
 ### Note
 There should be more files in the conllu, output and text folders. The files uploaded here are only samples.
 
-The script was developed for the Divergent Discourses project by Yuki Gyokogu (Leipzig University) and Franz Xaver Erhard (Leipzig University)
+The script was developed for the Divergent Discourses project by Yuki Kyogoku (Leipzig University) and Franz Xaver Erhard (Leipzig University)
