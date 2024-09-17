@@ -1,0 +1,75 @@
+# When the program stopped and you want to restart it:
+1. open the Terminal
+2. cd C:\Users\erhard\Documents\gemini
+3. python3 src/main.py
+	- Hit enter and wait until the process starts. This may take a few seconds ... even a minute
+	- If you want to stop the process, Ctrl+C in terminal
+
+# When you want to run the program in another PC:
+1. copy the following folders and file to your USB
+	- src
+	- text
+		* but it is not necessary to copy all the files in the folder
+	- pybo/dialect_packs/custom
+		* This folder is usually located under your 'Document' folder.
+	- requirements.txt
+2. open the Explore in another PC and navigate to the folder in which you want to run the program.
+3. create a folder named 'gemini' and further create folders named 'conllu' and 'output' under the folder 'gemini'.
+4. make sure if python is executable in the PC. If not, install it.
+5. open the terminal and navigate to the folder 'gemini' and run the following command
+	- python -m venv venv
+	- source venv/bin/activate
+		* for Windows: .\venv\Scripts\activate
+	- pip install -r requirements.txt
+6. run the following command in terminal:
+	6.1. pip install --upgrade google-cloud-aiplatform
+	6.2. install gcloud
+		- download the installer in this link ("1. Download the Google Cloud CLI installer."): https://cloud.google.com/sdk/docs/install-sdk?hl=de
+	6.3. gcloud auth application-default login
+		* If you get an error message such as "gcloud is not recognized"
+		- download and install gcloud: https://cloud.google.com/sdk/docs/install?hl=de
+		* If you get an error message, follow the instruction.
+		- follow the instruction. When you are asked: "Pick cloud project to use", choose [2] tibetan-postagging-...
+7. run the following command under the folder 'gemini':
+	- python3 src/main.py
+	* alternatively, python src/main.py
+8. The programm executed in step 7 will stop (if it does not stop, stop it by Ctrl+C). Then place the custom under document/pybo/dialect_packs, and run the programm again like in step 7.
+* If you got the following error, do steps 8.1-8.4:
+	- An error occurred: 403 This API method requires billing to be enabled.
+	8.1. visit the following page in google clould:
+		- https://console.cloud.google.com/welcome?hl=de
+	8.2. click on ... in 'Sie arbeiten in ...'
+	8.3. copy ID of the project name you use.
+	8.4. change vertex = VertexAI() in src/main.py to vertex = VertexAI(project=...). ... should be the project ID you coped in step 8.3.
+
+# When you want to change the account:
+1. Change the project ID to the new one in src/main.py, see step 8.4. above.
+2. open the terminal and enter gcloud init
+	- If it does not work, reinstall the Google Cloud Cli. See step 6.2. above.
+3. Choose [1] Re-initialize this configuration [default] with new settings.
+4. Choose [2] Sign in with a new Google Account
+5. Choose [2] tibetan-postagging-... (You should check if it is correct, see step 8 above)
+
+# Common Errors and solutions:
+- 429 Quota exceeded for aiplatform.googleapis.com/generate_content_requests_per_minute_per_project_per_base_model with base model: gemini-1.5-pro. Please submit a quota increase request. https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai.
+* Follow the instruction in the link: https://cloud.google.com/vertex-ai/docs/generative-ai/quotas-genai)
+1. open https://console.cloud.google.com/iam-admin/quotas?hl=de&project=tibetan-postagging-... (... is the project ID)
+	* You can find this url in the link given in 0.
+	1.1 If you are not sure about the project ID, open https://console.cloud.google.com/welcome
+	1.2. You see the project name next to "Google Cloud" icon on the top-left bar.
+	1.3. Click on the project name, then it displays the names and ids you have in the current account.
+2. Select the "Vertex AI API" whose contigent value you want to increase.
+	* If the setting does not change, select the "Vertex AI API" whose dimensions have "region: us-central1" and "base_model: gemini-1.5-pro"
+	** If you cannot find it, you can also filter out the others.
+3. Click on "edit" displayed as pop-up, and give the new value.
+	* You can check the current value in the "Vertex AI API" you selected in 2.
+	** !Important Information!: You should increase the value gradually, e.g., if you have 5 as the current value, set the new value to 10, not jump to 20.
+	*** !Important Information!: You should keep the script running to show Google Cloud that you are actively using the Vertex AI API.
+
+# Run Post-Processing
+1. navigate the directory to the folder "gemini".
+	- cd C:\Users\erhard\Documents\gemini
+2. create a folder named "conllu" under "gemini".
+3. activate the venv environment, see step 5 above.
+4. pip install conllu
+5. python src/post_processing.py
