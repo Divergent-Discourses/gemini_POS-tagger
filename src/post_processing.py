@@ -2,7 +2,7 @@ from botok.config import Config
 from botok import WordTokenizer
 import os
 from conllu import parse
-from module import load_conllu, check_tags, modify_pos_tag, add_lemmas, generate_conllu, export_conllu
+from module import load_conllu, check_tags, modify_pos_tag, add_lemmas, generate_conllu, add_entries, export_conllu
 
 def main():
     base_dir = os.getcwd()
@@ -28,9 +28,12 @@ def main():
         sentences = modify_pos_tag(sentences)
         sentences = add_lemmas(sentences, wt)
 
+        # modifications in string
+        conllu = generate_conllu(sentences)
+        conllu = add_entries(conllu)
+
         # export conllu file
         output_file = output_dir + file_name
-        conllu = generate_conllu(sentences)
         export_conllu(conllu, output_file)
 
 if __name__ == '__main__':

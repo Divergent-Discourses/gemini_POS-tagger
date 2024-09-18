@@ -145,3 +145,31 @@ def add_lemmas(sentences, wt):
                 token['lemma'] = token['form']
 
     return sentences
+
+# add dummy entries to HEAD, DEPREL and MISC in conllu
+def add_entries(input_conllu):
+    lines = input_conllu.split('\n')
+    modified_lines = []
+    for line in lines:
+        if line.startswith("#") or line.strip() == "":
+            # Add comment lines and empty lines as is
+            modified_lines.append(line)
+            continue
+
+        columns = line.split('\t')
+        if len(columns) == 10:  # Ensure the line has all necessary columns
+            if columns[6].strip() == "_":  # Check if HEAD column is "_"
+                columns[6] = '0'  # Replace with 0
+            if columns[7].strip() == "_":  # Check if DEPREL column is "_"
+                columns[7] = 'root'  # Replace with root
+            if columns[9].strip() == "_":  # Check if MISC column is "_"
+                columns[9] = "SpaceAfter=No"  # Replace with "SpaceAfter=No"
+            modified_line = '\t'.join(columns)
+            modified_lines.append(modified_line)
+        else:
+            modified_lines.append(line)  # If columns are not complete, add line as is
+
+    output_conllu = str()
+    for line in modified_lines:
+        output_conllu = output_conllu + line + '\n'
+    return output_conllu
