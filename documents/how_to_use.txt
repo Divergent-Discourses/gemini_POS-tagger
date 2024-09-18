@@ -66,7 +66,7 @@
 	** !Important Information!: You should increase the value gradually, e.g., if you have 5 as the current value, set the new value to 10, not jump to 20.
 	*** !Important Information!: You should keep the script running to show Google Cloud that you are actively using the Vertex AI API.
 
-# Run Post-Processing
+# How to run Post-Processing
 1. navigate the directory to the folder "gemini".
 	- cd C:\Users\erhard\Documents\gemini
 2. create a folder named "conllu" under "gemini".
